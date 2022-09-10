@@ -6,6 +6,7 @@ import com.musuala.soft.aliouthiema.enums.State;
 import com.musuala.soft.aliouthiema.services.DroneService;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -40,6 +41,11 @@ public class DroneController {
     @GetMapping(path = "medications/{id}")
     public HttpEntity<Object> getMedications(@PathVariable Long id){
         return this.droneService.getLoadedMedications(id);
+    }
+
+    @PostMapping(path = "upload/images")
+    public  HttpEntity<Object> uploadImages(@RequestParam("images") MultipartFile images){
+        
     }
 
 }
