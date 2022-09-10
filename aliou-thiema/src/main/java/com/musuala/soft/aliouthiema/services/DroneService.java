@@ -6,6 +6,7 @@ import com.musuala.soft.aliouthiema.enums.State;
 import com.musuala.soft.aliouthiema.helpers.ResponseHelper;
 import com.musuala.soft.aliouthiema.repositories.DroneRepository;
 import com.musuala.soft.aliouthiema.repositories.MedicationRepository;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -98,6 +99,15 @@ public class DroneService {
             return ResponseHelper.generateResponse("", HttpStatus.OK, drone.get().getMedications());
         }catch (Exception e){
             throw new RuntimeException(e.getCause());
+        }
+    }
+
+    public void uploadImage(String image){
+        try{
+            byte[] imageByte = Base64.decodeBase64(image);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

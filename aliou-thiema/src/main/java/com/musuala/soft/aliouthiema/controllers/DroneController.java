@@ -45,7 +45,7 @@ public class DroneController {
 
     @PostMapping(path = "upload/images")
     public  HttpEntity<Object> uploadImages(@RequestParam("images") MultipartFile images){
-        
+
     }
 
 }

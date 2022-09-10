@@ -17,4 +17,4 @@ server:
   port: 8082
 file:
   upload:
-    url: "files/images"
+    dir: "files/images"
