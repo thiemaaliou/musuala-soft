@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      author: "Aliou Thiema"
+      id: "2022090901"
+      changes:
+        - addColumn:
+            tableName: "drones"
+            columns:
+              - column:
+                  name: drone_id
+                  type: int
+                  defaultOnNull: false

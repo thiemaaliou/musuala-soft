@@ -1,0 +1,60 @@
+databaseChangeLog:
+
+  - changeSet:
+      author: "Aliou Thiema"
+      id: "2022090701"
+      changes:
+        - createTable:
+            tableName: "drones"
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: serial_number
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: model
+                  type: varchar(50)
+              - column:
+                  name: weight_limit
+                  type: int
+              - column:
+                  name: battery_capacity
+                  type: varchar(50)
+              - column:
+                  name: state
+                  type: varchar(50)
+        - createTable:
+            tableName: "medications"
+            columns:
+              - column:
+                 name: id
+                 type: int
+                 constraints:
+                   primaryKey: true
+                   nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: weight
+                  type: int
+              - column:
+                  name: code
+                  type: varchar(50)
+              - column:
+                  name: state
+                  type: varchar(50)
+              - column:
+                  name: drone_id
+                  type: int
+                  defaultOnNull: false
