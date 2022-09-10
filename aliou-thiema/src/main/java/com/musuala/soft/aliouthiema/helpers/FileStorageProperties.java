@@ -10,7 +10,4 @@ public class FileStorageProperties {
         return uploadDir;
     }
 
-    public void setUploadDir(String uploadDir) {
-        this.uploadDir = uploadDir;
-    }
 }

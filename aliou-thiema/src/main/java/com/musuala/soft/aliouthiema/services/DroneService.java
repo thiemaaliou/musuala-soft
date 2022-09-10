@@ -3,14 +3,22 @@ package com.musuala.soft.aliouthiema.services;
 import com.musuala.soft.aliouthiema.entities.Drone;
 import com.musuala.soft.aliouthiema.entities.Medication;
 import com.musuala.soft.aliouthiema.enums.State;
+import com.musuala.soft.aliouthiema.helpers.FileStorageProperties;
 import com.musuala.soft.aliouthiema.helpers.ResponseHelper;
 import com.musuala.soft.aliouthiema.repositories.DroneRepository;
 import com.musuala.soft.aliouthiema.repositories.MedicationRepository;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +26,11 @@ import java.util.Optional;
 public class DroneService {
     private final DroneRepository droneRepository;
     private final MedicationRepository medicationRepository;
-    public DroneService(DroneRepository droneRepository, MedicationRepository medicationRepository){
+
+    @Value("${file.upload.dir}")
+    private String upladDir;
+
+    public DroneService(DroneRepository droneRepository, MedicationRepository medicationRepository) throws Exception {
         this.droneRepository = droneRepository;
         this.medicationRepository = medicationRepository;
     }
@@ -45,6 +57,9 @@ public class DroneService {
                     medication.setName(m.getName());
                     medication.setCode(m.getCode());
                     medication.setWeight(m.getWeight());
+                    if(!m.getImage().isEmpty()){
+                        medication.setImage(uploadImage(m.getImage(), m.getName().replaceAll("\\s", "").toLowerCase()));
+                    }
                     this.medicationRepository.save(medication);
                 }
                 drone.get().setState(State.LOADED);
@@ -102,9 +117,30 @@ public class DroneService {
         }
     }
 
-    public void uploadImage(String image){
+    public String uploadImage(String image, String imageName){
         try{
-            byte[] imageByte = Base64.decodeBase64(image);
+            File file = new File(this.upladDir);
+            if (file.mkdirs()) {
+                System.out.println("Directory is created!");
+            } else {
+                System.out.println("Directory already exist ");
+            }
+
+            String img = URLDecoder.decode(image, "UTF-8");
+            img = img.replace("\n", "");
+            byte[] imageByte = Base64.decodeBase64(img);
+            /**
+             * Need refractor
+             * Image must be File
+             * Extension must be dynamique
+             * Name must improved
+             * checking directory must be a part of service
+             */
+            String extension = image.indexOf("png") != -1 ? ".png" : ".jpg";
+            String fileUri = upladDir.concat("/"+imageName+extension);
+            new FileOutputStream(fileUri).write(imageByte);
+
+            return fileUri;
 
         } catch (Exception e) {
             throw new RuntimeException(e);
