@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      - file: /db/changelog/2022/09/20220907-changelog.yml
+      - file: /db/changelog/2022/09/1.add-drone-id-column.yml
+      - file: /db/changelog/2022/09/2.add-drone-id-as-foreign-key.yml

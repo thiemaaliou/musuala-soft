@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: "2022090902"
+      author: "Aliou Thiema"
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: drone_id
+            baseTableName: medications
+            constraintName: fk_drone_id
+            referencedColumnNames: id
+            referencedTableName: drones
+            validate: true
+            onDelete: CASCADE
+            onUpdate: CASCADE
