@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import java.util.List;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,6 +32,7 @@ public class Drone {
     private Model model;
 
     @Column(name = "weight_limit")
+    @Max(value = 500, message = "Weight limit should  be less than 500")
     private Integer weightLimit;
 
     @Column(name = "battery_capacity")
